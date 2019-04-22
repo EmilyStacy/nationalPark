@@ -12,10 +12,12 @@ function displayResults(responseJson, maxResults) {
   for (let i = 0; i < responseJson.data.length & i< maxResults ; i++){
     //description, and image
     $('#results-list').append(
-      `<li><h3>${responseJson.data[i].fullName}</h3>
-      <a href="${responseJson.data[i].url}">${responseJson.data[i].name}</a>
+      `<li>
+      <h3>${responseJson.data[i].fullName}</h3>
+      <p><a href="${responseJson.data[i].url}" target="_blank">${responseJson.data[i].name}</a></p>
+      <h3>State(s):${responseJson.data[i].states}</h3>
       <p>${responseJson.data[i].description}</p>
-      
+      <p><a href="${responseJson.data[i].directionsUrl}" target="_blank">Click for directions</a></p>
       </li>`
     )};
   //display the results section  
@@ -54,7 +56,10 @@ function getParks(searchState, maxResults=10) {
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
-    const searchState = $('#js-search-term').val();
+    const searchTerm = $('#js-search-term').val();
+    console.log(searchTerm);
+    const searchState = searchTerm.split(',');
+   console.log(searchState);
     const maxResults = $('#js-max-results').val();
     getParks(searchState, maxResults);
   });
